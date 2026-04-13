@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주간 영업회의 회의록 — GRACE INC.</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --body: #3d3d5c;
+    --muted: #8888a0;
+    --accent: #2a4494;
+    --accent-light: #3b5cb8;
+    --accent-bg: #eef2fa;
+    --surface: #ffffff;
+    --bg: #f7f8fc;
+    --border: #e2e4ed;
+    --gold: #c4a35a;
+    --hover-bg: #f0f3fb;
+    --current-glow: rgba(42, 68, 148, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a4494 60%, #3b5cb8 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(196, 163, 90, 0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 30%, rgba(59, 92, 184, 0.2) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 32px 44px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .brand-logo {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: -0.5px;
+    backdrop-filter: blur(8px);
+  }
+
+  .brand-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+
+  .header-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 18px 0 12px;
+    opacity: 0.7;
+  }
+
+  /* ─── MAIN ─── */
+  .main-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  /* ─── CURRENT CARD ─── */
+  .current-section {
+    margin-top: -28px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .current-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 24px rgba(26, 26, 46, 0.06), 0 1px 3px rgba(26, 26, 46, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    transition: box-shadow 0.25s ease;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .current-card:hover {
+    box-shadow: 0 8px 32px rgba(42, 68, 148, 0.1), 0 2px 6px rgba(26, 26, 46, 0.05);
+  }
+
+  .current-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .current-label .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .current-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+  }
+
+  .current-date {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .current-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .current-card:hover .current-arrow {
+    background: var(--accent);
+    transform: translateX(3px);
+  }
+
+  .current-card:hover .current-arrow svg {
+    stroke: #fff;
+  }
+
+  .current-arrow svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--accent);
+    stroke-width: 2;
+    fill: none;
+    transition: stroke 0.2s;
+  }
+
+  /* ─── ARCHIVE LIST ─── */
+  .archive-section {
+    margin-top: 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-count {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .year-group {
+    margin-top: 28px;
+  }
+
+  .year-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .minutes-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(26, 26, 46, 0.03);
+  }
+
+  .minutes-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    text-decoration: none;
+    color: inherit;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s ease;
+    gap: 16px;
+  }
+
+  .minutes-item:last-child {
+    border-bottom: none;
+  }
+
+  .minutes-item:hover {
+    background: var(--hover-bg);
+  }
+
+  .item-date-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+
+  .minutes-item:hover .item-date-badge {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+  }
+
+  .item-month {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+
+  .item-day {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .item-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .item-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .item-meta {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .item-weekday {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .item-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .minutes-item:hover .item-icon {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .item-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--accent);
+    stroke-width: 2;
+    fill: none;
+  }
+
+  /* ─── FOOTER ─── */
+  .site-footer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 32px 48px;
+    text-align: center;
+  }
+
+  .footer-line {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .footer-text a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* ─── SEARCH ─── */
+  .search-bar {
+    margin-top: 32px;
+    position: relative;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--surface);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-bar input::placeholder {
+    color: var(--muted);
+  }
+
+  .search-bar input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--current-glow);
+  }
+
+  .search-bar .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    stroke: var(--muted);
+    stroke-width: 2;
+    fill: none;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .header-inner { padding: 36px 20px 36px; }
+    .page-title { font-size: 28px; }
+    .main-content { padding: 0 16px 60px; }
+    .current-card { padding: 18px 20px; }
+    .minutes-item { padding: 12px 16px; }
+    .item-date-badge { width: 44px; height: 44px; }
+    .item-day { font-size: 17px; }
+    .item-month { font-size: 9px; }
+  }
+
+  /* ─── ANIMATION ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .minutes-item {
+    opacity: 0;
+    animation: fadeUp 0.35s ease forwards;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">G</div>
+      <div class="brand-text">Grace Inc.</div>
+    </div>
+    <h1 class="page-title">주간 영업회의 회의록</h1>
+    <div class="header-divider"></div>
+    <p class="page-subtitle">Sales Meeting Minutes Archive — 아래 날짜를 클릭하여 회의록을 확인하세요.</p>
+  </div>
+</header>
+
+<main class="main-content">
+  <!-- Current Update -->
+  <div class="current-section fade-in">
+    <a class="current-card" href="https://drive.google.com/open?id=1JbxJLuKXIN4lFJAVTT2LiRD-NaE8e2XdFiB4uYNJzvg" target="_blank" rel="noopener">
+      <div>
+        <div class="current-label"><span class="dot"></span>최신 회의록</div>
+        <div class="current-title">영업회의_Minutes_04/10</div>
+        <div class="current-date">2026년 4월 10일 (금)</div>
+      </div>
+      <div class="current-arrow">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
+    </a>
+  </div>
+
+  <!-- Search -->
+  <div class="search-bar fade-in" style="animation-delay: 0.1s;">
+    <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="날짜 또는 제목으로 검색..." oninput="filterList(this.value)">
+  </div>
+
+  <!-- Archive List -->
+  <div class="archive-section fade-in" style="animation-delay: 0.15s;">
+    <div class="section-header">
+      <span class="section-title">Archive</span>
+      <span class="section-line"></span>
+      <span class="section-count" id="countLabel">총 18건</span>
+    </div>
+
+    <!-- 2026 -->
+    <div class="year-group" data-year="2026">
+      <div class="year-label">2026</div>
+      <div class="minutes-list">
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1JbxJLuKXIN4lFJAVTT2LiRD-NaE8e2XdFiB4uYNJzvg" target="_blank" rel="noopener" data-search="2026 04 10 4월 금 영업회의_Minutes_04/10" style="animation-delay:0.05s">
+          <div class="item-date-badge"><span class="item-month">Apr</span><span class="item-day">10</span></div>
+          <div class="item-info"><div class="item-title">영업회의_Minutes_04/10</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.04.10</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1ABnGXmzA9Gb7D1vfi_coqgdIYI6-rLPJW0R4dif_YvY" target="_blank" rel="noopener" data-search="2026 03 20 3월 금 영업회의_Minutes_03/20" style="animation-delay:0.08s">
+          <div class="item-date-badge"><span class="item-month">Mar</span><span class="item-day">20</span></div>
+          <div class="item-info"><div class="item-title">영업회의_Minutes_03/20</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.03.20</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1uX6Gm0ZdrKu2akQzzG4_EsyupkLVO_x3Fn8fKGxIizE" target="_blank" rel="noopener" data-search="2026 03 13 3월 금 영업회의_Minutes_03/13" style="animation-delay:0.11s">
+          <div class="item-date-badge"><span class="item-month">Mar</span><span class="item-day">13</span></div>
+          <div class="item-info"><div class="item-title">영업회의_Minutes_03/13</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.03.13</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1hOxJ6v_lagjKdJ8aULwLOwS3J3nCR55Bq_rk-Dvo6Gk" target="_blank" rel="noopener" data-search="2026 03 06 3월 금 영업회의_Minutes_03/06" style="animation-delay:0.14s">
+          <div class="item-date-badge"><span class="item-month">Mar</span><span class="item-day">06</span></div>
+          <div class="item-info"><div class="item-title">영업회의_Minutes_03/06</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.03.06</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=11-msK1naQjWVI5IoOjnlFpjSDeE-yqMGBqDVakkqrps" target="_blank" rel="noopener" data-search="2026 02 27 2월 금 영업회의_Minutes_02/27" style="animation-delay:0.17s">
+          <div class="item-date-badge"><span class="item-month">Feb</span><span class="item-day">27</span></div>
+          <div class="item-info"><div class="item-title">영업회의_Minutes_02/27</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.02.27</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1wg0gOm_Ah8nEkoCEDubLZkWqfehV4ZH6GgC0I4aE1f4" target="_blank" rel="noopener" data-search="2026 02 20 2월 금 영업회의_Minutes_02/20" style="animation-delay:0.20s">
+          <div class="item-date-badge"><span class="item-month">Feb</span><span class="item-day">20</span></div>
+          <div class="item-info"><div class="item-title">영업회의_Minutes(02/20)</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.02.20</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1LnQRQDZ6gaX6mgGD_jSB-XRBuWK0FNSmWc-lx5kwmdY" target="_blank" rel="noopener" data-search="2026 02 13 2월 금 영업회의_Minutes_02/13" style="animation-delay:0.23s">
+          <div class="item-date-badge"><span class="item-month">Feb</span><span class="item-day">13</span></div>
+          <div class="item-info"><div class="item-title">영업회의_Minutes(02/13)</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.02.13</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1YAlW0bdwYVVSkeZGKfGGamdCmwQWJcNu82X328s5e6A" target="_blank" rel="noopener" data-search="2026 01 30 1월 금 영업 주간 회의 minutes_01/30" style="animation-delay:0.26s">
+          <div class="item-date-badge"><span class="item-month">Jan</span><span class="item-day">30</span></div>
+          <div class="item-info"><div class="item-title">영업 주간 회의 minutes_01/30</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.01.30</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1yjwrwviWO-Hg9PSgqNbL9EHzpIzRAG4-EWLNbJycBWY" target="_blank" rel="noopener" data-search="2026 01 09 1월 금 영업회의_minutes_01/09" style="animation-delay:0.29s">
+          <div class="item-date-badge"><span class="item-month">Jan</span><span class="item-day">09</span></div>
+          <div class="item-info"><div class="item-title">영업회의_minutes(01/09)</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2026.01.09</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- 2025 -->
+    <div class="year-group" data-year="2025">
+      <div class="year-label">2025</div>
+      <div class="minutes-list">
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1usnlrgPZQCX9f2l0v5N7AUKPCXDYeAqv384Tsrkuxm8" target="_blank" rel="noopener" data-search="2025 12 12 12월 금 영업회의_minutes_12/12" style="animation-delay:0.32s">
+          <div class="item-date-badge"><span class="item-month">Dec</span><span class="item-day">12</span></div>
+          <div class="item-info"><div class="item-title">영업회의_minutes(12/12)</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2025.12.12</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1ttqVmHDE8rEM6T1qqcVxszpPlulOBr284-RocGFM1dA" target="_blank" rel="noopener" data-search="2025 10 24 10월 금 영업회의 Minutes_10/24" style="animation-delay:0.35s">
+          <div class="item-date-badge"><span class="item-month">Oct</span><span class="item-day">24</span></div>
+          <div class="item-info"><div class="item-title">영업회의 Minutes(10/24)</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2025.10.24</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1g6vX08TXSpED_JOMSQ0dHeWizL925l1EBwYJArf4nDI" target="_blank" rel="noopener" data-search="2025 10 17 10월 금 영업회의 Minutes_10/17" style="animation-delay:0.38s">
+          <div class="item-date-badge"><span class="item-month">Oct</span><span class="item-day">17</span></div>
+          <div class="item-info"><div class="item-title">영업회의 Minutes(10/17)</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2025.10.17</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1n14o0bJyuhCqjIg9LZSI7otQ_DzkawtgHlKYbLhmi8E" target="_blank" rel="noopener" data-search="2025 10 02 10월 목 영업회의 meeting minutes_10/02" style="animation-delay:0.41s">
+          <div class="item-date-badge"><span class="item-month">Oct</span><span class="item-day">02</span></div>
+          <div class="item-info"><div class="item-title">영업회의 meeting minutes(10/02)</div><div class="item-meta"><span class="item-weekday">목요일</span><span>·</span><span>2025.10.02</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1cViTPRsm9mnbnC6LMIhTlWRSY5bLCxxUnxDRY-7bh_Q" target="_blank" rel="noopener" data-search="2025 09 26 9월 금 영업회의_minutes_09/26" style="animation-delay:0.44s">
+          <div class="item-date-badge"><span class="item-month">Sep</span><span class="item-day">26</span></div>
+          <div class="item-info"><div class="item-title">영업회의_minutes(09/26)</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2025.09.26</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1BqoIcPj7vmNHIvFZtbAixlM4aG9rqW3RZ1sYdj7QhDo" target="_blank" rel="noopener" data-search="2025 09 12 9월 금 영업회의_미팅 minutes_09/12" style="animation-delay:0.47s">
+          <div class="item-date-badge"><span class="item-month">Sep</span><span class="item-day">12</span></div>
+          <div class="item-info"><div class="item-title">영업회의_미팅 minutes(09/12)</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2025.09.12</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1hLJJ22TMKKuz5tPeCc5q_ZI4sUvCW0mQxVP4lXHwFKU" target="_blank" rel="noopener" data-search="2025 08 29 8월 금 2025-08-29 영업회의_미팅 미닛" style="animation-delay:0.50s">
+          <div class="item-date-badge"><span class="item-month">Aug</span><span class="item-day">29</span></div>
+          <div class="item-info"><div class="item-title">2025-08-29 영업회의_미팅 미닛</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2025.08.29</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=15RFiMrHYtoQmhZATv42j2EMP1RbHPVP89-iF4t_u9Ns" target="_blank" rel="noopener" data-search="2025 06 20 6월 금 06/20 영업회의 미팅 미닛" style="animation-delay:0.53s">
+          <div class="item-date-badge"><span class="item-month">Jun</span><span class="item-day">20</span></div>
+          <div class="item-info"><div class="item-title">06/20 영업회의 미팅 미닛</div><div class="item-meta"><span class="item-weekday">금요일</span><span>·</span><span>2025.06.20</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+        <a class="minutes-item" href="https://drive.google.com/open?id=1GhGiWvEvs89zj3AghKfLwFFGp4rk6RkQ5Yl0LtkNnmU" target="_blank" rel="noopener" data-search="2025 06 05 6월 목 20250605 영업회의록" style="animation-delay:0.56s">
+          <div class="item-date-badge"><span class="item-month">Jun</span><span class="item-day">05</span></div>
+          <div class="item-info"><div class="item-title">20250605 영업회의록</div><div class="item-meta"><span class="item-weekday">목요일</span><span>·</span><span>2025.06.05</span></div></div>
+          <div class="item-icon"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-line"></div>
+  <div class="footer-text">
+    ㈜그레이스 GRACE INC. · 경영기획실<br>
+    서울특별시 강남구 논현로81길 11 · <a href="https://www.graceint.com" target="_blank">www.graceint.com</a><br>
+    본 페이지는 사내 영업회의 회의록 아카이브 용도로 제작되었습니다.
+  </div>
+</footer>
+
+<script>
+function filterList(query) {
+  const q = query.toLowerCase().trim();
+  const items = document.querySelectorAll('.minutes-item');
+  const yearGroups = document.querySelectorAll('.year-group');
+  let visibleCount = 0;
+
+  items.forEach(item => {
+    const searchData = (item.getAttribute('data-search') || '').toLowerCase();
+    const titleEl = item.querySelector('.item-title');
+    const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+    const match = !q || searchData.includes(q) || title.includes(q);
+    item.style.display = match ? '' : 'none';
+    if (match) visibleCount++;
+  });
+
+  yearGroups.forEach(group => {
+    const visibleItems = group.querySelectorAll('.minutes-item:not([style*="display: none"])');
+    group.style.display = visibleItems.length > 0 ? '' : 'none';
+  });
+
+  document.getElementById('countLabel').textContent = q ? visibleCount + '건 검색됨' : '총 18건';
+}
+</script>
+
+</body>
+</html>
